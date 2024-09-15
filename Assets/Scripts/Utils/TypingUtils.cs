@@ -1,23 +1,31 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public static class TypingUtils
 {
     private static string randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':\",.<>/?";
 
     // Typing function with glitch effect
-    public static IEnumerator TypeLine(Text dialogueText, string dialogue, float textTypeSpeed, float glitchEffectCount)
+    public static IEnumerator TypeLine(TextMeshProUGUI dialogueText, string dialogue, float textTypeSpeed, float glitchEffectCount, int appendNewLine, float glitchEffectSpeed)
     {
-        // Clear the text initially
-        dialogueText.text = "";
-        
+        // If appendNewLine is 0, clear the current text, otherwise start a new line
+        if (appendNewLine == 0)
+        {
+            dialogueText.text = "";
+        }
+        else
+        {
+            dialogueText.text += "\n"; // Add a new line before the new text
+        }
+
         foreach (char letter in dialogue.ToCharArray())
         {
             dialogueText.text += letter;
 
             // Call the GlitchEffect coroutine to apply the glitch effect
-            yield return GlitchEffect(dialogueText, glitchEffectCount);
+            yield return GlitchEffect(dialogueText, glitchEffectCount, glitchEffectSpeed);
 
             // Replace the last random character with the actual letter
             dialogueText.text = dialogueText.text.Substring(0, dialogueText.text.Length - 1) + letter;
@@ -28,7 +36,7 @@ public static class TypingUtils
     }
 
     // Glitch effect that randomly changes the current letter
-    private static IEnumerator GlitchEffect(Text dialogueText, float glitchEffectCount)
+    private static IEnumerator GlitchEffect(TextMeshProUGUI  dialogueText, float glitchEffectCount, float glitchEffectSpeed)
     {
         float effectCurrentCount = glitchEffectCount;
 
@@ -37,7 +45,7 @@ public static class TypingUtils
             char randomChar = randomChars[Random.Range(0, randomChars.Length)];
             dialogueText.text = dialogueText.text.Substring(0, dialogueText.text.Length - 1) + randomChar;
 
-            yield return new WaitForSeconds(0.01f); // Time between glitch changes
+            yield return new WaitForSeconds(glitchEffectSpeed); // Time between glitch changes
             effectCurrentCount--;
         }
     }
