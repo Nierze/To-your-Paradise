@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 401423407}
   - component: {fileID: 401423406}
   m_Layer: 0
-  m_Name: Dialogue Box
+  m_Name: Dialogue Box (old)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ MonoBehaviour:
   DialogueSource: {fileID: 1613758174}
   DialogueText: {fileID: 1943901319}
   textTypeSpeed: 0.001
-  glitchEffectCount: 3
+  glitchEffectCount: 4
 --- !u!114 &789662821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,8 +1419,8 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 519420032}
   - {fileID: 845268383}
   - {fileID: 699198527}
   - {fileID: 528039018}
