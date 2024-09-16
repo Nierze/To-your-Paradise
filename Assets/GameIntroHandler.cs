@@ -2,52 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI; 
-using UnityEngine.Video; 
+using UnityEngine.UI;
+using UnityEngine.Video;
 using TMPro;
 
 public class GameIntroHandler : MonoBehaviour
 {
-    
-    public VideoPlayer introVideo;
-    public RawImage screen;
-    
-    
+    [Header("Video Components")]
+    [SerializeField] private VideoPlayer introVideo;
+    [SerializeField] private RawImage screen;
 
+    [Header("Text Components")]
+    [SerializeField] private TextMeshProUGUI introTextBox;
+    [SerializeField] private float textTypeSpeed = 0.05f;
+    [SerializeField] private string introTextFilePath = "Assets/Dialogues/IntroText.scrpt";
 
-        
-    public GameObject volumeHandlerObject;
+    [Header("Other Components")]
+    [SerializeField] private GameObject volumeHandlerObject;
 
-
-    //////////////////////////////////////
-    /// Intro Text
-
-    // Text box to display the intro text
-    public TextMeshProUGUI introTextBox;
-
-    // List to store the lines of the intro text
-    public List<string> introTextLines;
-    private int currentLineIndex = 0; 
-
-    // Variables to control the typing speed and glitch effect
-    public float textTypeSpeed;  
-    public float glitchEffectCount;  
+    private List<string> introTextLines = new List<string>();
+    private int currentLineIndex = 0;
     private bool isTyping = false;
-        
-    
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        // Read the intro text file
-        introTextLines = ReadFileLines("Assets/Dialogues/IntroText.scrpt");
-        introTextBox.text = ""; // Clear the text box
-
+        // Load intro text lines from the file
+        introTextLines = LoadIntroText(introTextFilePath);
+        introTextBox.text = string.Empty; // Clear the text box
     }
 
-    void Update()
+    private void Update()
     {
-        if (introVideo.isPlaying == false && screen.color.a != 0f)
+        HandleVideoTransition();
+        HandleTextTyping();
+    }
+
+    // Handle the video transition and fade
+    private void HandleVideoTransition()
+    {
+        if (!introVideo.isPlaying && screen.color.a != 0f)
         {
             StartCoroutine(TransitionUtils.FadeTransparency(screen, 0f, 1f));
         }
@@ -56,58 +49,40 @@ public class GameIntroHandler : MonoBehaviour
         {
             volumeHandlerObject.SetActive(true);
         }
+    }
 
-        if (introVideo.isPlaying == false && !isTyping && screen.color.a == 0f)
+    // Handle the typing of text lines
+    private void HandleTextTyping()
+    {
+        if (!introVideo.isPlaying && !isTyping && screen.color.a == 0f)
         {
             if (currentLineIndex < introTextLines.Count)
             {
-                StartCoroutine(TypeOutIntro());
+                StartCoroutine(TypeOutCurrentLine());
             }
         }
-
-        // if (currentLineIndex == introTextLines.Count)
-        // {
-
-        //     introTextBox.text = "type ";
-        //     StartCoroutine(TypingUtils.TypeLine(introTextBox, "Press Space to Start", textTypeSpeed, glitchEffectCount, 1, 0)); 
-        // }
-        
     }
 
-    // Coroutine to type each line from the list
-    IEnumerator TypeOutIntro()
+    // Coroutine to type out the current line
+    private IEnumerator TypeOutCurrentLine()
     {
         isTyping = true;
+        string currentLine = introTextLines[currentLineIndex];
 
-        if (currentLineIndex < introTextLines.Count)
-        {
-            // Get the current line to type
-            string currentLine = introTextLines[currentLineIndex];
-            
-            // Use the TypeLine method from TypingUtils to type it out
-            yield return StartCoroutine(TypingUtils.TypeLine(introTextBox, currentLine, textTypeSpeed, glitchEffectCount, 1, 0));
-            
-            // Wait for the player to press space to continue to the next line
-            currentLineIndex++;
-        }
-
+        yield return StartCoroutine(TypingUtils.TypeLine(introTextBox, currentLine, textTypeSpeed, 1));
+        currentLineIndex++;
         isTyping = false;
     }
 
-    // Method to read the text file
-    public List<string> ReadFileLines(string filePath)
+    // Load intro text lines from a file
+    private List<string> LoadIntroText(string filePath)
     {
-        List<string> lines = new List<string>();
-
-        if (File.Exists(filePath))
+        if (!File.Exists(filePath))
         {
-            lines.AddRange(File.ReadAllLines(filePath));
-        }
-        else
-        {
-            Debug.LogError("File not found: " + filePath);
+            Debug.LogError($"File not found: {filePath}");
+            return new List<string>();
         }
 
-        return lines;
+        return new List<string>(File.ReadAllLines(filePath));
     }
 }

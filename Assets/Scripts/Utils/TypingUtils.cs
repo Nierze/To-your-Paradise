@@ -1,52 +1,63 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public static class TypingUtils
 {
-    private static string randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':\",.<>/?";
+    private const string GlitchCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':\",.<>/?";
 
-    // Typing function with glitch effect
-    public static IEnumerator TypeLine(TextMeshProUGUI dialogueText, string dialogue, float textTypeSpeed, float glitchEffectCount, int appendNewLine, float glitchEffectSpeed)
+    // Typing effect with optional glitch effect
+    public static IEnumerator TypeLineGlitch(TextMeshProUGUI textComponent, string message, float typingSpeed, int addNewLine, float glitchDuration, float glitchSpeed)
     {
-        // If appendNewLine is 0, clear the current text, otherwise start a new line
-        if (appendNewLine == 0)
+        // Handle text resetting or appending
+        textComponent.text = (addNewLine == 0) ? string.Empty : textComponent.text + "\n";
+
+        foreach (char letter in message.ToCharArray())
         {
-            dialogueText.text = "";
-        }
-        else
-        {
-            dialogueText.text += "\n"; // Add a new line before the new text
-        }
+            textComponent.text += letter;
 
-        foreach (char letter in dialogue.ToCharArray())
-        {
-            dialogueText.text += letter;
+            // Apply glitch effect
+            yield return ApplyGlitchEffect(textComponent, glitchDuration, glitchSpeed);
 
-            // Call the GlitchEffect coroutine to apply the glitch effect
-            yield return GlitchEffect(dialogueText, glitchEffectCount, glitchEffectSpeed);
+            // Restore the correct letter after glitch
+            textComponent.text = ReplaceLastCharacter(textComponent.text, letter);
 
-            // Replace the last random character with the actual letter
-            dialogueText.text = dialogueText.text.Substring(0, dialogueText.text.Length - 1) + letter;
-
-            // Pause between each letter for typing effect
-            yield return new WaitForSeconds(textTypeSpeed);
+            // Pause for typing effect
+            yield return new WaitForSeconds(typingSpeed);
         }
     }
 
-    // Glitch effect that randomly changes the current letter
-    private static IEnumerator GlitchEffect(TextMeshProUGUI  dialogueText, float glitchEffectCount, float glitchEffectSpeed)
+        // Simple typing effect without glitch
+    public static IEnumerator TypeLine(TextMeshProUGUI textComponent, string message, float typingSpeed, int addNewLine)
     {
-        float effectCurrentCount = glitchEffectCount;
+        // Handle text resetting or appending
+        textComponent.text = (addNewLine == 0) ? string.Empty : textComponent.text + "\n";
 
-        while (effectCurrentCount > 0)
+        foreach (char letter in message.ToCharArray())
         {
-            char randomChar = randomChars[Random.Range(0, randomChars.Length)];
-            dialogueText.text = dialogueText.text.Substring(0, dialogueText.text.Length - 1) + randomChar;
+            textComponent.text += letter;
 
-            yield return new WaitForSeconds(glitchEffectSpeed); // Time between glitch changes
-            effectCurrentCount--;
+            // Pause for typing effect
+            yield return new WaitForSeconds(typingSpeed);
         }
+    }
+
+    // Applies a glitch effect by temporarily replacing the current letter
+    private static IEnumerator ApplyGlitchEffect(TextMeshProUGUI textComponent, float duration, float speed)
+    {
+        while (duration > 0)
+        {
+            char randomChar = GlitchCharacters[Random.Range(0, GlitchCharacters.Length)];
+            textComponent.text = ReplaceLastCharacter(textComponent.text, randomChar);
+
+            yield return new WaitForSeconds(speed);
+            duration--;
+        }
+    }
+
+    // Helper function to replace the last character of the string
+    private static string ReplaceLastCharacter(string text, char newChar)
+    {
+        return text.Substring(0, text.Length - 1) + newChar;
     }
 }

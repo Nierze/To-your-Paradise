@@ -153,11 +153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introVideo: {fileID: 783096559}
   screen: {fileID: 1599130111}
-  volumeHandlerObject: {fileID: 1047752293}
   introTextBox: {fileID: 2128736553}
-  introTextLines: []
-  textTypeSpeed: 0.0001
-  glitchEffectCount: 0
+  textTypeSpeed: 0.00001
+  introTextFilePath: Assets/Dialogues/IntroText.scrpt
+  volumeHandlerObject: {fileID: 1047752293}
 --- !u!4 &458060486
 Transform:
   m_ObjectHideFlags: 0
