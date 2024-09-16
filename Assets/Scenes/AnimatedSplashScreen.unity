@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7bd788db3cbc14aa701d2a7e89e01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneVolume: {fileID: 1047752294}
   introVideo: {fileID: 783096559}
   screen: {fileID: 1599130111}
   introTextBox: {fileID: 2128736553}

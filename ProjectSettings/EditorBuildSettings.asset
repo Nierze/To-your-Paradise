@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/AnimatedSplashScreen.unity
+    guid: 871c3fd9baab94d42b3254e3e230c4f1
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 2a2fca849b9b10b4c8a61da576545fc8
   m_configObjects: {}
