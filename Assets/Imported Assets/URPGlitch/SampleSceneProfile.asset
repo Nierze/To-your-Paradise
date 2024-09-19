@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Value: 0.01
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.02
+    m_Value: 0.04
   horizontalShake:
     m_OverrideState: 1
     m_Value: 0.01

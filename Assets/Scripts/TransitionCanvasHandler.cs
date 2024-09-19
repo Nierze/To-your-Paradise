@@ -24,7 +24,9 @@ public class TransitionCanvasHandler : MonoBehaviour
         }
     }
 
-    [SerializeField] private Image fadePanel;
+    [SerializeField] private GameObject fadePanelObject;
+    private Image fadePanel;
+    private GameObject transitionCanvas;
     [SerializeField] private Animator fadePanelAnim;
     private void Awake()
     {
@@ -41,16 +43,19 @@ public class TransitionCanvasHandler : MonoBehaviour
 
     void Start()
     {
-        //fadePanel.canvasRenderer.SetAlpha(0f);
+        transitionCanvas = gameObject;
+        fadePanel = fadePanelObject.GetComponent<Image>();
     }
 
     public void FadeIn()
     {
+        transitionCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         fadePanelAnim.SetTrigger("FadeIn");
     }
 
     public void FadeOut()
     {
+        transitionCanvas.GetComponent<GraphicRaycaster>().enabled = true;
         fadePanelAnim.SetTrigger("FadeOut");
     }
 }

@@ -16,6 +16,15 @@ public class MainMenuHandler : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] private Image backgroundImage;
     [SerializeField] private List<Sprite> backgroundImages;
+    [SerializeField] private RectTransform menuPanel;
+
+    //////////////////////////////////////////////
+    /// Menu Scroll Clapms
+    private float menuItemCount;
+    private float itemWidth;
+    private float leftMax;
+    private float rightMax;
+
     void Start()
     {
         if (!sceneVolume.profile.TryGet(out analogGlitch))
@@ -24,15 +33,31 @@ public class MainMenuHandler : MonoBehaviour
         }
         TransitionCanvasHandler.Instance.FadeIn();
         StartCoroutine(menuGlitchTransition(2f));
+
+        //////////////////////////////////////////////
+        /// Menu Scroll Clapms
+        menuItemCount = 3;
+        itemWidth = 750f;
+        leftMax = (menuItemCount * itemWidth) / 2;
+        rightMax = -((menuItemCount * itemWidth) / 2 - itemWidth);
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.RightArrow))  // REMINDER: Edit left and right max when changing menu items
         {
-            StartCoroutine(menuGlitchTransition(0.6f));
-            backgroundImage.sprite = backgroundImages[Random.Range(0, backgroundImages.Count)];
+            if (rightMax != menuPanel.anchoredPosition.x)
+            {
+                scrollMenuPanel(-750f);
+            }
+        } 
+        else if (Input.GetKeyDown(KeyCode.LeftArrow)) 
+        {
+            if (leftMax != menuPanel.anchoredPosition.x) 
+            {
+                scrollMenuPanel(750f);
+            }
         }
     }
 
@@ -41,5 +66,20 @@ public class MainMenuHandler : MonoBehaviour
     {
         yield return TransitionUtils.ChangeAnalogGlitchVolume(analogGlitch, 1f, 1f, 1f, 1f, 0.05f);
         yield return TransitionUtils.ChangeAnalogGlitchVolume(analogGlitch, 0.02f, 0.03f, 0.02f, 0.05f, outDuration);
+    }
+
+    void scrollMenuPanel(float x)
+    {
+        StartCoroutine(menuGlitchTransition(0.6f));
+        MoveRectTransformByX(menuPanel, x);
+        backgroundImage.sprite = backgroundImages[Random.Range(0, backgroundImages.Count)];
+    }
+
+
+    void MoveRectTransformByX(RectTransform rectTransform, float deltaX)
+    {
+        Vector2 currentPosition = rectTransform.anchoredPosition;
+        currentPosition.x += deltaX;
+        rectTransform.anchoredPosition = currentPosition;
     }
 }
