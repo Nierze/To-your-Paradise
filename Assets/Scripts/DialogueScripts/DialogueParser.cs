@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class DialogueParser
 {
@@ -22,9 +23,11 @@ public class DialogueParser
     {
         List<DialogueEntry> dialogueEntries = new List<DialogueEntry>();
 
-        if (File.Exists(fileName))
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+
+        if (File.Exists(filePath))
         {
-            string[] lines = File.ReadAllLines(fileName);
+            string[] lines = File.ReadAllLines(filePath);
 
             string currentSource = "";
             string currentDialogue = "";
@@ -40,7 +43,7 @@ public class DialogueParser
                 {
                     // Extract dialogue between [DIALOGUE: and ]
                     currentDialogue = line.Substring(10, line.Length - 11); // Removes [DIALOGUE:] and the closing ]
-                    
+
                     // Add the pair to the list
                     dialogueEntries.Add(new DialogueEntry(currentSource, currentDialogue));
                 }
@@ -48,7 +51,7 @@ public class DialogueParser
         }
         else
         {
-            Console.WriteLine($"File at {fileName} does not exist.");
+            Debug.LogError($"File at {filePath} does not exist.");
         }
 
         return dialogueEntries;

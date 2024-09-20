@@ -157,7 +157,7 @@ MonoBehaviour:
   screen: {fileID: 1599130111}
   introTextBox: {fileID: 2128736553}
   textTypeSpeed: 0.00001
-  introTextFilePath: Assets/Dialogues/IntroText.scrpt
+  introTextFilePath: Dialogues/IntroText.scrpt
   volumeHandlerObject: {fileID: 1047752293}
 --- !u!4 &458060486
 Transform:
@@ -309,7 +309,7 @@ VideoPlayer:
   m_RenderMode: 2
   m_AspectRatio: 2
   m_DataSource: 0
-  m_TimeUpdateMode: 0
+  m_TimeUpdateMode: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []

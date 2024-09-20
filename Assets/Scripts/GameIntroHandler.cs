@@ -12,6 +12,11 @@ using URPGlitch.Runtime.AnalogGlitch;
 
 public class GameIntroHandler : MonoBehaviour
 {
+    // Constants
+    private const float TargetGlitchValue = 1f;
+    [SerializeField] private const float GlitchRampUpDuration = 2f;
+
+    // Serialized Fields
     [Header("Post Processing Components")]
     [SerializeField] private Volume sceneVolume;
     [SerializeField] private AnalogGlitchVolume analogGlitch;
@@ -23,19 +28,17 @@ public class GameIntroHandler : MonoBehaviour
     [Header("Text Components")]
     [SerializeField] private TextMeshProUGUI introTextBox;
     [SerializeField] private float textTypeSpeed = 0.05f;
-    [SerializeField] private string introTextFilePath = "Assets/Dialogues/IntroText.scrpt";
+    [SerializeField] private string introTextFilePath = ""; // Only the file name
 
     [Header("Other Components")]
     [SerializeField] private GameObject volumeHandlerObject;
 
+    // Private Fields
     private List<string> introTextLines;
     private int currentLineIndex;
     private bool isTyping;
     private bool isTextComplete;
     private bool hasRampUpStarted;
-
-    private const float TargetGlitchValue = 1f;
-    private const float GlitchRampUpDuration = 4f;
 
     private void Start()
     {
@@ -56,7 +59,6 @@ public class GameIntroHandler : MonoBehaviour
 
         if (sceneVolume.profile.TryGet(out analogGlitch))
         {
-            // Initialization of analogGlitch if needed
         }
     }
 
@@ -66,8 +68,7 @@ public class GameIntroHandler : MonoBehaviour
         {
             StartCoroutine(TransitionUtils.FadeTransparency(screen, 0f, 1f));
         }
-
-        if (screen.color.a == 0f)
+        else if (screen.color.a == 0f && !volumeHandlerObject.activeSelf)
         {
             volumeHandlerObject.SetActive(true);
         }
@@ -90,13 +91,14 @@ public class GameIntroHandler : MonoBehaviour
     private IEnumerator TypeOutCurrentLine()
     {
         isTyping = true;
-        yield return StartCoroutine(TypingUtils.TypeLine(introTextBox, introTextLines[currentLineIndex], textTypeSpeed, 1));
+        yield return TypingUtils.TypeLine(introTextBox, introTextLines[currentLineIndex], textTypeSpeed, 1);
         currentLineIndex++;
         isTyping = false;
     }
 
-    private List<string> LoadIntroText(string filePath)
+    private List<string> LoadIntroText(string fileName)
     {
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
         if (!File.Exists(filePath))
         {
             Debug.LogError($"File not found: {filePath}");
@@ -117,18 +119,16 @@ public class GameIntroHandler : MonoBehaviour
 
     private IEnumerator StartSceneTransition()
     {
-
-        StartCoroutine(TransitionUtils.GlitchRampUp(analogGlitch, TargetGlitchValue, GlitchRampUpDuration));
+        yield return StartCoroutine(TransitionUtils.GlitchRampUp(analogGlitch, TargetGlitchValue, GlitchRampUpDuration));
         yield return new WaitForSeconds(GlitchRampUpDuration / 2f);
         TransitionCanvasHandler.Instance.FadeOut();
         yield return new WaitForSeconds(1f);
-        
-        yield return StartCoroutine(LoadScene());
+        yield return StartCoroutine(LoadScene("MainMenu"));
     }
 
-    private IEnumerator LoadScene()
+    private IEnumerator LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncLoad.isDone)
         {
             yield return null;

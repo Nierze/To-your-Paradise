@@ -31,6 +31,8 @@ public class DialogueController : MonoBehaviour
     public TextMeshProUGUI DialogueSource;
     public TextMeshProUGUI DialogueText;
 
+    [SerializeField] private string filePath = "Dialogues/testScript.scrpt"; // Path to the dialogue file
+
     // Use DialogueEntry array instead of string array for lines
     public List<DialogueParser.DialogueEntry> dialogueEntries; // Array of DialogueEntry objects
     private int index; // Index of the current line
@@ -55,7 +57,7 @@ public class DialogueController : MonoBehaviour
         // Assuming you have a way to load the dialogue entries from a file
         // For demonstration, I'm assuming dialogueEntries is populated with DialogueEntry objects
         
-        dialogueEntries = DialogueParser.ParseDialogueFile("Assets/Dialogues/testScript.scrpt");
+        dialogueEntries = DialogueParser.ParseDialogueFile(filePath);
         DialogueText.text = string.Empty;
         DialogueSource.text = string.Empty;
         startDialogue();
