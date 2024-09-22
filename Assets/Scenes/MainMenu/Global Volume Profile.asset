@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: 0.75
   intensity:
     m_OverrideState: 1
-    m_Value: 25
+    m_Value: 20
   scatter:
     m_OverrideState: 1
     m_Value: 0.69
@@ -90,7 +90,7 @@ MonoBehaviour:
   active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.02
+    m_Value: 0.01
   verticalJump:
     m_OverrideState: 1
     m_Value: 0.03

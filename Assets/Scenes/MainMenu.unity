@@ -1036,6 +1036,8 @@ MonoBehaviour:
   - menuItem: {fileID: 5421553660258348051, guid: ad4ca35ca8ea93d41bface922d5f6a39, type: 3}
     backgroundImage: {fileID: 21300000, guid: bf674655c54a32a4e9a98029898b5f43, type: 3}
   - menuItem: {fileID: 5421553660258348051, guid: 79e1b85ce21c0c0449c0111c85451fff, type: 3}
+    backgroundImage: {fileID: 21300000, guid: 2e8198eda61aa074b8b6fa740433ba6c, type: 3}
+  - menuItem: {fileID: 5421553660258348051, guid: fb4dfa173beecbf4181ee0fa7691ca41, type: 3}
     backgroundImage: {fileID: 21300000, guid: 20c79df210e02ab48a574e77a01fcfbc, type: 3}
   menuOptionContainer: {fileID: 392839363}
 --- !u!1 &1492747848
