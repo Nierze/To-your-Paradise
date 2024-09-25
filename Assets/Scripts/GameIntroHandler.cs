@@ -32,6 +32,7 @@ public class GameIntroHandler : MonoBehaviour
 
     [Header("Other Components")]
     [SerializeField] private GameObject volumeHandlerObject;
+    [SerializeField] private Button startButton;
 
     // Private Fields
     private List<string> introTextLines;
@@ -43,13 +44,18 @@ public class GameIntroHandler : MonoBehaviour
     private void Start()
     {
         InitializeComponents();
+        startButton.interactable = false;
     }
 
     private void Update()
     {
         HandleVideoTransition();
         HandleTextTyping();
-        HandleSceneTransition();
+
+        if (isTextComplete) 
+        {
+            startButton.interactable = true;
+        }
     }
 
     private void InitializeComponents()
@@ -108,12 +114,12 @@ public class GameIntroHandler : MonoBehaviour
         return File.ReadAllLines(filePath).ToList();
     }
 
-    private void HandleSceneTransition()
+    public void HandleSceneTransition()
     {
-        if (isTextComplete && Input.anyKeyDown && !hasRampUpStarted)
+        if (isTextComplete && !hasRampUpStarted)
         {
-            StartCoroutine(StartSceneTransition());
             hasRampUpStarted = true;
+            StartCoroutine(StartSceneTransition());
         }
     }
 

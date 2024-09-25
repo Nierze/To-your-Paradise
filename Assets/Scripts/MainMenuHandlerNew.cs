@@ -38,7 +38,14 @@ public class MainMenuHandlerNew : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            moveOptionRight();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            moveOptionLeft();
+        }
     }
 
     private IEnumerator menuGlitchTransition(float outDuration)

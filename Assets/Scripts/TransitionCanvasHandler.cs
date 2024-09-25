@@ -58,4 +58,22 @@ public class TransitionCanvasHandler : MonoBehaviour
         transitionCanvas.GetComponent<GraphicRaycaster>().enabled = true;
         fadePanelAnim.SetTrigger("FadeOut");
     }
+
+        public IEnumerator FadeInAsynch()
+    {
+        transitionCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        fadePanelAnim.SetTrigger("FadeIn");
+
+        // Wait for the animation to complete
+        yield return new WaitForSeconds(1f); // Adjust the time as needed
+    }
+
+    public IEnumerator FadeOutAsynch()
+    {
+        transitionCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+        fadePanelAnim.SetTrigger("FadeOut");
+
+        // Wait for the animation to complete
+        yield return new WaitForSeconds(1f); // Adjust the time as needed
+    }
 }
