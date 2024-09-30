@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioSource BGM;
     [SerializeField] private AudioSource SFX;
     [SerializeField] private AudioSource AMBIENCE;
     [SerializeField] private List<AudioFile> audioFiles = new List<AudioFile>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -24,15 +38,6 @@ public class AudioManager : MonoBehaviour
         SFX.Play();
     }
 
-
-
-
-
-
-
-
-
-
     private AudioClip GetAudioClip(string name)
     {
         foreach (AudioFile audioFile in audioFiles)
@@ -44,8 +49,6 @@ public class AudioManager : MonoBehaviour
         }
         return null;
     }
-
-
 
     [System.Serializable]
     public class AudioFile

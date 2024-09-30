@@ -7,23 +7,7 @@ public class DialogueController : MonoBehaviour
 {
     ////////////////////////////////////////////////
     /// Singleton Pattern
-    private static DialogueController instance;
-    public static DialogueController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<DialogueController>();
-                if (instance == null)
-                {
-                    GameObject singleton = new GameObject("DialogueController");
-                    instance = singleton.AddComponent<DialogueController>();
-                }
-            }
-            return instance;
-        }
-    }
+    public static DialogueController Instance { get; private set; }
 
     /////////////////////////////////////////////////
     /// Variables
@@ -41,9 +25,9 @@ public class DialogueController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -54,9 +38,6 @@ public class DialogueController : MonoBehaviour
 
     void Start()
     {
-        // Assuming you have a way to load the dialogue entries from a file
-        // For demonstration, I'm assuming dialogueEntries is populated with DialogueEntry objects
-        
         dialogueEntries = DialogueParser.ParseDialogueFile(filePath);
         DialogueText.text = string.Empty;
         DialogueSource.text = string.Empty;
