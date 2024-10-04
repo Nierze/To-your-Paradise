@@ -284,7 +284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 724438763332081846, guid: 00dbe004726c41c43b9ccc7bafb5db46, type: 3}
       propertyPath: m_Volume
-      value: 0.913
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 1450213433878088950, guid: 00dbe004726c41c43b9ccc7bafb5db46, type: 3}
       propertyPath: audioFiles.Array.size
