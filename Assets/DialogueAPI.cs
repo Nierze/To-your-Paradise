@@ -15,7 +15,6 @@ public class DialogueAPI : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (Instance != this)
         {
@@ -24,17 +23,17 @@ public class DialogueAPI : MonoBehaviour
     }
 
 
-    public void Say(CharacterData charData, string dialogue) 
-    {
+    // public void Say(CharacterData charData, string dialogue) 
+    // {
 
-        dialogueSource.text = charData.characterName;
-        dialogueSourceTitle.text = charData.characterTitle;
+    //     dialogueSource.text = charData.characterName;
+    //     dialogueSourceTitle.text = charData.characterTitle;
 
-        // PlayerPref Variables
-        float typeSpeed = PlayerPrefs.GetFloat("TypingSpeed");
-        float duration = PlayerPrefs.GetFloat("GlitchDuration");
-        TypingUtils.TypeLineGlitch(dialogueText, dialogue, typeSpeed, 0, duration, 0.05f);
-    }
+    //     // PlayerPref Variables
+    //     float typeSpeed = PlayerPrefs.GetFloat("TypingSpeed");
+    //     float duration = PlayerPrefs.GetFloat("GlitchDuration");
+    //     TypingUtils.TypeLineGlitch(dialogueText, dialogue, typeSpeed, 0, duration, 0.05f);
+    // }
 
 
 

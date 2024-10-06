@@ -11,10 +11,13 @@ public class UserChoiceHandler : MonoBehaviour
     [Header("Choices")]
     [SerializeField] private List<GameObject> choices = new List<GameObject>(); // List for choices
 
-    private int userChoice = 0;
+    public int userChoice = 0;
 
     [Header("Choices Texts")]
     [SerializeField] private List<string> choiceTexts = new List<string>(); // List for choice texts
+
+    [Header("Darken Panel")]
+    [SerializeField] private GameObject darkenPanel;
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class UserChoiceHandler : MonoBehaviour
 
     private void Start()
     {
+        darkenPanel.SetActive(false);
         foreach (var choice in choices)
         {
             choice.SetActive(false);
@@ -54,6 +58,8 @@ public class UserChoiceHandler : MonoBehaviour
     {
         userChoice = 0;
 
+        darkenPanel.SetActive(true);
+
         // Activate the number of choices based on optionCount
         for (int i = 0; i < optionCount; i++)
         {
@@ -63,7 +69,6 @@ public class UserChoiceHandler : MonoBehaviour
             }
         }
 
-        // Wait until the user makes a choice
         while (userChoice == 0)
         {
             yield return null; // Wait for the next frame and check again
@@ -75,7 +80,10 @@ public class UserChoiceHandler : MonoBehaviour
             choice.SetActive(false);
         }
 
+        darkenPanel.SetActive(false);
+
         Debug.Log("User choice: " + userChoice);
+        
     }
 
     public int GetUserChoice()
@@ -83,12 +91,15 @@ public class UserChoiceHandler : MonoBehaviour
         return userChoice;
     }
 
+
+    // this is used for buttons
     public void Choose(int choiceIndex)
     {
-        Debug.Log("pressed");
         if (choiceIndex > 0 && choiceIndex <= choices.Count)
         {
             userChoice = choiceIndex;
         }
     }
+
+    
 }

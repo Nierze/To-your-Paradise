@@ -467,3 +467,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonText: {fileID: 3732219764595663883}
   transitionDuration: 0.1
+  CoreToLoad: {fileID: 1644523436639280685, guid: cd593de9f922e3141807fdc2cca2b6b9, type: 3}

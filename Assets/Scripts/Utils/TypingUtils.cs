@@ -27,7 +27,7 @@ public static class TypingUtils
         }
     }
 
-        // Simple typing effect without glitch
+    // Simple typing effect without glitch
     public static IEnumerator TypeLine(TextMeshProUGUI textComponent, string message, float typingSpeed, int addNewLine)
     {
         // Handle text resetting or appending
@@ -60,4 +60,5 @@ public static class TypingUtils
     {
         return text.Substring(0, text.Length - 1) + newChar;
     }
+
 }

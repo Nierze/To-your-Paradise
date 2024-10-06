@@ -5,18 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class MM_StartButton : MenuButtonParentClass
 {
+    [SerializeField] private GameObject CoreToLoad; // The prefab you want to instantiate
+
     public void StartGame()
     {
-        // Start the fade-in and scene loading process
+        // Start the fade-out and scene loading process
         StartCoroutine(LoadGameAfterFade());
     }
 
     private IEnumerator LoadGameAfterFade()
     {
-        // Start the fade-in effect
+        // Start the fade-out effect
         yield return TransitionCanvasHandler.Instance.FadeOutAsynch();
 
-        // Load the scene after the fade-in completes
-        SceneManager.LoadScene("SampleScene");
+        // Register a callback to instantiate CoreToLoad after the scene is loaded
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // Load the scene after the fade-out completes
+        SceneManager.LoadScene("DialogueSceneTemplate");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if the loaded scene is the correct one
+        if (scene.name == "DialogueSceneTemplate")
+        {
+            // Instantiate CoreToLoad in the new scene
+            Instantiate(CoreToLoad);
+        }
+
+        // Unsubscribe from the event after use to avoid multiple instantiations
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
