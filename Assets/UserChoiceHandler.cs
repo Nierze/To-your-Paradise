@@ -91,6 +91,11 @@ public class UserChoiceHandler : MonoBehaviour
         return userChoice;
     }
 
+    public void ChangeChoiceText(int index, string text)
+    {
+        choiceTexts[index] = text;
+    }
+
 
     // this is used for buttons
     public void Choose(int choiceIndex)

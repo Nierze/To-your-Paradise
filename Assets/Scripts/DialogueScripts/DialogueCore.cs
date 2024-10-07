@@ -61,7 +61,7 @@ public abstract class DialogueCore : MonoBehaviour
         dialogueSource.text = character.characterName;
 
         // Start the typing effect and wait for it to finish
-        yield return TypingUtils.TypeLineGlitch(dialogueContent, dialogue, typeSpeed, 0, glitchDuration, 0.0f);
+        yield return TypingUtils.TypeLineGlitch(dialogueContent, dialogue, typeSpeed, 0, glitchDuration, 0.2f);
 
         // Wait for player input (e.g., pressing space) to continue
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));

@@ -37,7 +37,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 13
+    m_Value: 15.17
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -81,13 +81,13 @@ MonoBehaviour:
     m_Value: 0.01
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.04
+    m_Value: 0.02
   horizontalShake:
     m_OverrideState: 1
     m_Value: 0.01
   colorDrift:
     m_OverrideState: 1
-    m_Value: 0.04
+    m_Value: 0.01
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
