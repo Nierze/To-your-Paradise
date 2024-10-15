@@ -26,7 +26,7 @@ public class TransitionCanvasHandler : MonoBehaviour
 
     [SerializeField] private GameObject fadePanelObject;
     private Image fadePanel;
-    private GameObject transitionCanvas;
+    [SerializeField] private GameObject transitionCanvas;
     [SerializeField] private Animator fadePanelAnim;
     private void Awake()
     {

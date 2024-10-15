@@ -142,7 +142,7 @@ Material:
     - _HologramBlend: 1
     - _HologramMaxAlpha: 1
     - _HologramMinAlpha: 0.4
-    - _HologramStripesAmount: 0.02
+    - _HologramStripesAmount: 0.03
     - _HologramStripesSpeed: 4.5
     - _HologramUnmodAmount: 0
     - _HsvBright: 1

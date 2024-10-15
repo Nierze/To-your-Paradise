@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DialogueSceneTemplate.unity
     guid: 9e80f4b89fa8fda45a5cad18efc6ea5b
+  - enabled: 1
+    path: Assets/Scenes/PrologueIntro.unity
+    guid: 1c1ce98f687f03040b16974d763c7122
+  - enabled: 1
+    path: Assets/Scenes/TestDialogueScene/CoreTesting.unity
+    guid: c9863af7d1777d04a81999db6e4e3031
   m_configObjects: {}

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MM_StartButton : MenuButtonParentClass
 {
-    [SerializeField] private GameObject CoreToLoad; // The prefab you want to instantiate
+    // [SerializeField] private GameObject CoreToLoad; // The prefab you want to instantiate
 
     public void StartGame()
     {
@@ -13,28 +13,37 @@ public class MM_StartButton : MenuButtonParentClass
         StartCoroutine(LoadGameAfterFade());
     }
 
+
     private IEnumerator LoadGameAfterFade()
     {
         // Start the fade-out effect
         yield return TransitionCanvasHandler.Instance.FadeOutAsynch();
 
-        // Register a callback to instantiate CoreToLoad after the scene is loaded
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        // Load the scene after the fade-out completes
-        SceneManager.LoadScene("DialogueSceneTemplate");
+        SceneManager.LoadScene("PrologueIntro");
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Check if the loaded scene is the correct one
-        if (scene.name == "DialogueSceneTemplate")
-        {
-            // Instantiate CoreToLoad in the new scene
-            Instantiate(CoreToLoad);
-        }
+    // private IEnumerator LoadGameAfterFade()
+    // {
+    //     // Start the fade-out effect
+    //     yield return TransitionCanvasHandler.Instance.FadeOutAsynch();
 
-        // Unsubscribe from the event after use to avoid multiple instantiations
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    //     // Register a callback to instantiate CoreToLoad after the scene is loaded
+    //     SceneManager.sceneLoaded += OnSceneLoaded;
+
+    //     // Load the scene after the fade-out completes
+    //     SceneManager.LoadScene("DialogueSceneTemplate");
+    // }
+
+    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     // Check if the loaded scene is the correct one
+    //     if (scene.name == "DialogueSceneTemplate")
+    //     {
+    //         // Instantiate CoreToLoad in the new scene
+    //         Instantiate(CoreToLoad);
+    //     }
+
+    //     // Unsubscribe from the event after use to avoid multiple instantiations
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 }
